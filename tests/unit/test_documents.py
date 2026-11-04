@@ -43,8 +43,7 @@ class TestTitleResolver:
         resolver = TitleResolver()
 
         assert (
-            resolver.resolve({"title": "A"}, "# B", Path("x.md"), "Target")
-            == "Target"
+            resolver.resolve({"title": "A"}, "# B", Path("x.md"), "Target") == "Target"
         )
 
     def test_strips_leading_h1_when_it_matches_title(self):

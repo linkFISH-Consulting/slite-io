@@ -65,6 +65,7 @@ class UploadAction:
     reason: str | None = None
     warnings: tuple[str, ...] = ()
 
+
 @dataclass
 class UploadResult:
     """A batch of upload actions plus command metadata."""

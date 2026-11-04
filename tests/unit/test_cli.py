@@ -12,7 +12,11 @@ runner = CliRunner()
 
 
 class TestCli:
-    def test_version_option(self):
+    def test_version_option(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.delenv("SLITE_API_KEY", raising=False)
+        monkeypatch.delenv("SLITE_API_KEY_FILE", raising=False)
+
         result = runner.invoke(app, ["--version"])
 
         assert result.exit_code == 0
@@ -33,7 +37,11 @@ class TestCli:
         finally:
             logger.setLevel(previous_level)
 
-    def test_upload_format_choices_are_exposed(self):
+    def test_upload_format_choices_are_exposed(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        monkeypatch.delenv("SLITE_API_KEY", raising=False)
+        monkeypatch.delenv("SLITE_API_KEY_FILE", raising=False)
+
         result = runner.invoke(app, ["upload-single", "--help"])
 
         assert result.exit_code == 0
