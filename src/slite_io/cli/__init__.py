@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import logging
-import sys
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Annotated
 
@@ -33,10 +33,19 @@ app = typer.Typer(
 )
 
 
-class SliteContext(typer.Context):
-    """Typed Typer context carrying the lazily created Slite client."""
+@dataclass
+class CliState:
+    """Options needed to create the Slite client on first use."""
 
-    obj: SliteApiClient | None
+    api_key: str | None
+    base_url: str
+    client: SliteApiClient | None = None
+
+
+class SliteContext(typer.Context):
+    """Typed Typer context carrying the lazy CLI state."""
+
+    obj: CliState | None
 
 
 def _version_callback(value: bool) -> None:
@@ -84,21 +93,18 @@ def main(
     setup_logging_handler(verbose)
     if version:
         return
-    if ctx.invoked_subcommand is None or ctx.invoked_subcommand == "validate":
-        return
-    if "--help" in sys.argv[1:]:
-        return
-
-    key = ApiKeyResolver().resolve(api_key)
-    ctx.obj = SliteApiClient.from_api_key(key, base_url)
+    ctx.obj = CliState(api_key=api_key, base_url=base_url)
 
 
 def _client(ctx: typer.Context) -> SliteApiClient:
     """Return the initialized Slite client or fail clearly."""
-    client = ctx.obj
-    if not isinstance(client, SliteApiClient):
-        raise SliteIOError("Slite client is not initialized.")
-    return client
+    state = ctx.obj
+    if not isinstance(state, CliState):
+        raise SliteIOError("CLI context is not initialized.")
+    if state.client is None:
+        key = ApiKeyResolver().resolve(state.api_key)
+        state.client = SliteApiClient.from_api_key(key, state.base_url)
+    return state.client
 
 
 def _highlight_last(path: str) -> Text:
