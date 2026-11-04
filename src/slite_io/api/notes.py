@@ -183,9 +183,7 @@ class NotesApiClient:
         )
         return Note.from_payload(payload)
 
-    def _find_child(
-        self, parent_note_id: str, title: str, *, parent_path: str
-    ) -> Note:
+    def _find_child(self, parent_note_id: str, title: str, *, parent_path: str) -> Note:
         """Resolve a required child by title inside a known parent path."""
         target = normalize_title(title)
         matches = [

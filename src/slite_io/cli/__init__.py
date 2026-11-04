@@ -189,7 +189,7 @@ def upload_single(
         str,
         typer.Option(
             help=(
-                'Absolute root-channel path, e.g. '
+                "Absolute root-channel path, e.g. "
                 '"My private channel/Level 1/Level 2/Auth".'
             )
         ),
@@ -267,7 +267,7 @@ def upload_batch(
         str,
         typer.Option(
             help=(
-                'Existing absolute root-channel folder, e.g. '
+                "Existing absolute root-channel folder, e.g. "
                 '"My private channel/Level 1/Level 2".'
             )
         ),

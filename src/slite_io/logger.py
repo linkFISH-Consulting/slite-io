@@ -40,7 +40,7 @@ def setup_logging_handler(verbose_level: int = 0) -> None:
             }
             if verbose_level < 2
             else {}
-        )
+        ),
     )
 
     if verbose_level < 2:

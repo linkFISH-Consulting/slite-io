@@ -247,10 +247,7 @@ class ReadOnlyHeader:
             "> [!WARNING]",
             "> **🔒 Read-only mirror — do not edit this note in Slite.**",
             "> ",
-            (
-                "> This note is imported via the API. Manual changes "
-                "are overwritten"
-            ),
+            "> This note is imported via the API. Manual changes are overwritten",
             "> by the next sync.",
             ">",
         ]
