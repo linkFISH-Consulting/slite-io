@@ -1,0 +1,65 @@
+[project]
+name = "slite-io"
+version = "0.1.0"
+description = "Mirror Markdown/MDX documentation into Slite read-only notes"
+readme = "README.md"
+license = { text = "MIT" }
+classifiers = ["License :: OSI Approved :: MIT License"]
+requires-python = ">=3.11"
+dependencies = [
+    "prompt-toolkit>=3.0",
+    "python-dotenv>=1.2",
+    "requests>=2.32",
+    "ruamel-yaml>=0.18",
+    "typer>=0.21",
+]
+
+[project.scripts]
+slite-io = "slite_io.cli:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/slite_io"]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.19",
+    "pytest>=9",
+    "pytest-cov>=7",
+    "ruff>=0.14",
+    "types-requests>=2.32",
+]
+
+[tool.ruff]
+target-version = "py311"
+include = ["pyproject.toml", "src/**/*.py", "tests/**/*.py"]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "ISC",
+    "N",
+    "UP",
+    "PTH",
+    "W",
+]
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_untyped_decorators = true
+allow_redefinition = true
+
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib", "--cov=src/slite_io"]
+filterwarnings = ["error", "ignore::DeprecationWarning"]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.coverage.report]
+exclude_lines = ["if TYPE_CHECKING"]
+exclude_also = ["raise NotImplementedError", "@(abc\\.)?abstractmethod"]

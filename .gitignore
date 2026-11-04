@@ -1,0 +1,25 @@
+# Secrets
+.env
+.env.*
+!.env.example
+!archive/legacy-dbt-markdown-parser/.env-public
+*.pem
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache
+.coverage
+htmlcov/
+
+# Local artifacts
+*.db
+*.Modified
+.DS_Store
